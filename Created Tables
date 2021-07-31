@@ -1,0 +1,78 @@
+create table salesperson(
+	salesperson_id SERIAL Primary Key,
+	first_name VARCHAR(50),
+	last_name VARCHAR(50),
+	email VARCHAR(50),
+	contact_number VARCHAR(20)
+);
+
+create table mechanic(
+	mechanic_id SERIAL Primary Key,
+	first_name VARCHAR(50),
+	last_name VARCHAR(50),
+	email VARCHAR(50),
+	contact_number VARCHAR(20)
+);
+
+create table customer(
+	customer_id SERIAL Primary Key,
+	first_name VARCHAR(50),
+	last_name VARCHAR(50),
+	address VARCHAR(100),
+	email VARCHAR(50),
+	contact_number VARCHAR(20),
+	billing_info VARCHAR(23)
+);
+
+create table car(
+	car_id SERIAL Primary Key,
+	manf_year NUMERIC(4),
+	make VARCHAR(20),
+	model VARCHAR(20),
+	color VARCHAR(20),
+	is_new BOOLEAN,
+	previous_owner INTEGER,
+	mileage NUMERIC(7,1),
+	in_stock BOOLEAN,
+	price NUMERIC(8,2)
+);
+
+create table parts(
+	part_id SERIAL Primary Key,
+	part_name VARCHAR(25),
+	brand VARCHAR(25),
+	supplier VARCHAR(50),
+	stock INTEGER,
+	inv_location VARCHAR(10),
+	part_cost NUMERIC(6,2)
+);
+
+
+
+
+create table invoice(
+	invoice_id SERIAL Primary Key,
+	customer_id Integer,
+	car_id Integer,
+	salesperson_id Integer,
+	final_price Numeric(8,2),
+	invoice_date TimeStamp,
+	Foreign Key(customer_id) References customer(customer_id),
+	Foreign Key(car_id) References car(car_id),
+	Foreign Key(salesperson_id) References salesperson(salesperson_id)
+);
+
+create table serviceTicket(
+	service_id SERIAL Primary Key,
+	car_id INTEGER,
+	customer_id INTEGER,
+	mechanic_id INTEGER,
+	part_id INTEGER,
+	price NUMERIC(7,2),
+	description VARCHAR(100),
+	repair_date TIMESTAMP,
+	Foreign Key(car_id) References car(car_id),
+	Foreign Key(customer_id) References customer(customer_id),
+	Foreign Key(mechanic_id) References mechanic(mechanic_id),
+	Foreign Key(part_id) References part(part_id)
+);
